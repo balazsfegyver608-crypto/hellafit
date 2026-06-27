@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HellaFit Fehérvár — Edzőterem, Székesfehérvár</title>
+<meta name="description" content="HellaFit Fehérvár edzőterem a Bőrgyár utcában. Családias hangulat, jól felszerelt géppark, ingyenes parkolás. Napijegy, bérletek, csoportos órák.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --ink:#0E1410;
+  --ink-2:#161D17;
+  --paper:#F7F5EF;
+  --paper-dim:#EAE6DA;
+  --green:#6FBE44;
+  --green-deep:#4C8C2E;
+  --red:#C8342E;
+  --yellow:#E8B73A;
+  --line: rgba(247,245,239,0.14);
+  --line-strong: rgba(247,245,239,0.28);
+  --shadow: 0 30px 60px -25px rgba(0,0,0,0.55);
+  --display: "Bebas Neue", "Arial Narrow", sans-serif;
+  --body: "Inter", system-ui, sans-serif;
+  --mono: "JetBrains Mono", monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+ul{list-style:none;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+}
+
+:focus-visible{
+  outline:3px solid var(--yellow);
+  outline-offset:3px;
+}
+
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 28px;
+}
+
+/* ---------- texture ---------- */
+.grain{
+  position:fixed; inset:0; pointer-events:none; z-index:5;
+  opacity:0.05; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky; top:0; z-index:50;
+  background:rgba(14,20,16,0.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 28px;
+  max-width:1180px; margin:0 auto;
+}
+.brand{
+  display:flex; align-items:center; gap:10px;
+  font-family:var(--display);
+  font-size:1.55rem;
+  letter-spacing:0.04em;
+}
+.brand .mark{
+  width:34px; height:34px;
+  background:var(--green);
+  color:var(--ink);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--mono); font-weight:700; font-size:0.85rem;
+  transform:rotate(-3deg);
+  border-radius:3px;
+}
+.brand small{
+  display:block;
+  font-family:var(--mono);
+  font-size:0.55rem;
+  letter-spacing:0.18em;
+  color:var(--green);
+  font-weight:600;
+  margin-top:-2px;
+}
+nav.primary-nav{
+  display:flex; gap:30px;
+  font-size:0.86rem; font-weight:600;
+  letter-spacing:0.01em;
+}
+nav.primary-nav a{
+  position:relative;
+  padding:6px 0;
+  opacity:0.82;
+  transition:opacity .2s ease;
+}
+nav.primary-nav a:hover{opacity:1;}
+nav.primary-nav a::after{
+  content:"";
+  position:absolute; left:0; bottom:0;
+  width:0; height:2px; background:var(--green);
+  transition:width .25s ease;
+}
+nav.primary-nav a:hover::after{width:100%;}
+.topbar-cta{
+  display:flex; align-items:center; gap:14px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:11px 20px;
+  font-weight:700; font-size:0.84rem;
+  letter-spacing:0.02em;
+  border:none; border-radius:3px;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.btn-primary{
+  background:var(--green);
+  color:var(--ink);
+}
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px -8px rgba(111,190,68,0.55);
+}
+.btn-ghost{
+  background:transparent;
+  border:1.5px solid var(--line-strong);
+  color:var(--paper);
+}
+.btn-ghost:hover{ border-color:var(--green); color:var(--green); }
+
+.menu-toggle{
+  display:none;
+  width:42px; height:42px;
+  background:transparent; border:1px solid var(--line-strong);
+  border-radius:3px;
+  position:relative;
+}
+.menu-toggle span{
+  position:absolute; left:10px; right:10px; height:2px; background:var(--paper);
+  transition:transform .25s ease, opacity .25s ease;
+}
+.menu-toggle span:nth-child(1){top:14px;}
+.menu-toggle span:nth-child(2){top:20px;}
+.menu-toggle span:nth-child(3){top:26px;}
+.menu-toggle.open span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+.menu-toggle.open span:nth-child(2){opacity:0;}
+.menu-toggle.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;
+  padding:120px 0 90px;
+  background:
+    radial-gradient(ellipse 900px 500px at 85% -10%, rgba(111,190,68,0.16), transparent 60%),
+    linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
+  border-bottom:1px solid var(--line);
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image:
+    repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 120px);
+  opacity:0.5;
+  pointer-events:none;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap:60px;
+  align-items:center;
+  position:relative;
+  z-index:2;
+}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--mono);
+  font-size:0.72rem;
+  letter-spacing:0.16em;
+  color:var(--green);
+  background:rgba(111,190,68,0.1);
+  border:1px solid rgba(111,190,68,0.3);
+  padding:7px 14px 7px 10px;
+  border-radius:2px;
+  margin-bottom:26px;
+  text-transform:uppercase;
+}
+.eyebrow .dot{
+  width:7px; height:7px; border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 0 0 rgba(111,190,68,0.6);
+  animation:pulse 2.2s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(111,190,68,0.55);}
+  70%{box-shadow:0 0 0 7px rgba(111,190,68,0);}
+  100%{box-shadow:0 0 0 0 rgba(111,190,68,0);}
+}
+h1.hero-title{
+  font-family:var(--display);
+  font-size:clamp(3rem, 6.2vw, 5.4rem);
+  line-height:0.98;
+  letter-spacing:0.01em;
+  margin-bottom:24px;
+}
+h1.hero-title em{
+  font-style:normal;
+  color:var(--green);
+  position:relative;
+}
+.hero-lead{
+  font-size:1.12rem;
+  color:rgba(247,245,239,0.78);
+  max-width:480px;
+  margin-bottom:34px;
+}
+.hero-actions{
+  display:flex; gap:14px; flex-wrap:wrap;
+  margin-bottom:42px;
+}
+.btn-lg{padding:15px 28px; font-size:0.92rem; border-radius:4px;}
+
+.hero-meta{
+  display:flex; gap:34px; flex-wrap:wrap;
+}
+.hero-meta div{
+  font-family:var(--mono);
+}
+.hero-meta .num{
+  font-size:1.6rem; font-weight:700; color:var(--paper);
+  display:block;
+}
+.hero-meta .lbl{
+  font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(247,245,239,0.55);
+}
+
+.hero-visual{
+  position:relative;
+}
+.status-card{
+  background:var(--ink-2);
+  border:1px solid var(--line-strong);
+  border-radius:6px;
+  padding:26px 26px 22px;
+  box-shadow:var(--shadow);
+  position:relative;
+}
+.status-card::before{
+  content:"";
+  position:absolute; top:-1px; left:24px; right:24px; height:1px;
+  background:repeating-linear-gradient(90deg, var(--line-strong) 0 8px, transparent 8px 16px);
+}
+.status-top{
+  display:flex; justify-content:space-between; align-items:flex-start;
+  margin-bottom:18px;
+}
+.status-top .ticket-id{
+  font-family:var(--mono); font-size:0.7rem; color:rgba(247,245,239,0.4); letter-spacing:0.08em;
+}
+.status-pill{
+  font-family:var(--mono); font-size:0.74rem; font-weight:700;
+  padding:5px 11px; border-radius:20px;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.status-pill.open{background:rgba(111,190,68,0.15); color:var(--green); border:1px solid rgba(111,190,68,0.4);}
+.status-pill.closed{background:rgba(200,52,46,0.15); color:#ff7872; border:1px solid rgba(200,52,46,0.4);}
+.status-pill .dot2{width:6px;height:6px;border-radius:50%;background:currentColor;}
+
+.hours-list{
+  font-family:var(--mono);
+  font-size:0.85rem;
+}
+.hours-list li{
+  display:flex; justify-content:space-between;
+  padding:9px 0;
+  border-bottom:1px dashed var(--line);
+}
+.hours-list li:last-child{border-bottom:none;}
+.hours-list li.today{color:var(--yellow); font-weight:700;}
+.hours-list .day{color:rgba(247,245,239,0.65); font-weight:400;}
+.hours-list li.today .day{color:var(--yellow);}
+.hours-list .closed-txt{color:rgba(247,245,239,0.4);}
+
+.address-strip{
+  margin-top:18px; padding-top:16px; border-top:1px solid var(--line);
+  display:flex; align-items:center; gap:10px;
+  font-size:0.85rem; color:rgba(247,245,239,0.72);
+}
+
+/* ---------- marquee strip ---------- */
+.tickertape{
+  background:var(--green);
+  color:var(--ink);
+  overflow:hidden;
+  white-space:nowrap;
+  border-bottom:1px solid var(--line);
+}
+.tickertape-inner{
+  display:inline-flex;
+  animation:scroll-left 32s linear infinite;
+}
+.tickertape span{
+  font-family:var(--mono); font-weight:700; font-size:0.78rem;
+  letter-spacing:0.06em;
+  padding:11px 28px;
+  text-transform:uppercase;
+  border-right:1px solid rgba(14,20,16,0.25);
+}
+@keyframes scroll-left{
+  from{transform:translateX(0);}
+  to{transform:translateX(-50%);}
+}
+
+/* ---------- section heading ---------- */
+.section{
+  padding:96px 0;
+  border-bottom:1px solid var(--line);
+  position:relative;
+}
+.section-head{
+  margin-bottom:54px;
+  max-width:640px;
+}
+.section-tag{
+  font-family:var(--mono);
+  font-size:0.74rem; letter-spacing:0.18em;
+  color:var(--green);
+  text-transform:uppercase;
+  display:block; margin-bottom:14px;
+}
+.section-title{
+  font-family:var(--display);
+  font-size:clamp(2.1rem, 4vw, 3.1rem);
+  letter-spacing:0.01em;
+  line-height:1.02;
+}
+.section-sub{
+  margin-top:16px;
+  color:rgba(247,245,239,0.7);
+  font-size:1.02rem;
+  max-width:560px;
+}
+
+/* ---------- about ---------- */
+.about-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:64px;
+  align-items:start;
+}
+.about-copy p{
+  color:rgba(247,245,239,0.82);
+  font-size:1.04rem;
+  margin-bottom:18px;
+}
+.about-copy strong{color:var(--paper); font-weight:700;}
+.pull-quote{
+  font-family:var(--display);
+  font-size:1.6rem;
+  line-height:1.18;
+  color:var(--paper);
+  border-left:3px solid var(--green);
+  padding-left:22px;
+  margin:30px 0 30px;
+}
+.feature-list{
+  display:flex; flex-direction:column; gap:0;
+}
+.feature-row{
+  display:flex; gap:18px;
+  padding:20px 0;
+  border-bottom:1px solid var(--line);
+}
+.feature-row:first-child{padding-top:0;}
+.feature-row .ic{
+  flex:none;
+  width:44px; height:44px;
+  background:var(--ink-2);
+  border:1px solid var(--line-strong);
+  border-radius:6px;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--green);
+}
+.feature-row h3{
+  font-size:1.02rem; font-weight:700; margin-bottom:4px;
+}
+.feature-row p{
+  color:rgba(247,245,239,0.65);
+  font-size:0.92rem;
+}
+
+/* ---------- pricing ---------- */
+.pricing-section{background:var(--ink-2);}
+.price-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:22px;
+}
+.price-card{
+  background:var(--paper);
+  color:var(--ink);
+  border-radius:8px;
+  padding:30px 26px 26px;
+  position:relative;
+  overflow:hidden;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.price-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 24px 48px -20px rgba(0,0,0,0.5);
+}
+.price-card::after{
+  content:"";
+  position:absolute; left:0; right:0; bottom:0; height:10px;
+  background:repeating-linear-gradient(90deg, transparent 0 5px, var(--ink) 5px 6px);
+  background-color:var(--paper);
+  opacity:0.15;
+}
+.price-card .pc-top{
+  display:flex; justify-content:space-between; align-items:flex-start;
+  margin-bottom:22px;
+}
+.pc-num{
+  font-family:var(--mono); font-size:0.7rem; color:rgba(14,20,16,0.4); letter-spacing:0.06em;
+}
+.pc-badge{
+  font-family:var(--mono); font-size:0.65rem; font-weight:700;
+  background:var(--ink); color:var(--green);
+  padding:4px 9px; border-radius:3px; letter-spacing:0.05em;
+}
+.pc-badge.red{background:var(--red); color:var(--paper);}
+.pc-badge.yellow{background:var(--yellow); color:var(--ink);}
+.price-card h3{
+  font-family:var(--display);
+  font-size:1.5rem;
+  letter-spacing:0.01em;
+  margin-bottom:6px;
+}
+.price-card .pc-desc{
+  font-size:0.86rem;
+  color:rgba(14,20,16,0.6);
+  margin-bottom:22px;
+  min-height:38px;
+}
+.pc-price{
+  display:flex; align-items:baseline; gap:6px;
+  border-top:1px dashed rgba(14,20,16,0.25);
+  padding-top:18px;
+}
+.pc-price .amount{
+  font-family:var(--mono); font-weight:700; font-size:1.9rem;
+}
+.pc-price .cur{
+  font-family:var(--mono); font-size:0.95rem; color:rgba(14,20,16,0.55);
+}
+.price-card.featured{
+  background:var(--ink);
+  color:var(--paper);
+  border:1.5px solid var(--green);
+}
+.price-card.featured .pc-num{color:rgba(247,245,239,0.4);}
+.price-card.featured .pc-desc{color:rgba(247,245,239,0.6);}
+.price-card.featured .pc-price{border-top-color:var(--line-strong);}
+.price-card.featured .pc-price .cur{color:rgba(247,245,239,0.55);}
+.price-card.featured::after{background-color:var(--ink); opacity:0.5;}
+
+.price-note{
+  margin-top:30px;
+  font-family:var(--mono);
+  font-size:0.82rem;
+  color:rgba(247,245,239,0.55);
+  display:flex; align-items:center; gap:10px;
+}
+
+/* ---------- reviews ---------- */
+.reviews-rating{
+  display:flex; align-items:center; gap:16px;
+  margin-bottom:50px;
+}
+.rating-score{
+  font-family:var(--display); font-size:3.4rem; line-height:1;
+  color:var(--yellow);
+}
+.rating-stars{color:var(--yellow); font-size:1.1rem; letter-spacing:2px;}
+.rating-sub{font-size:0.85rem; color:rgba(247,245,239,0.6); font-family:var(--mono);}
+
+.review-marquee{
+  position:relative;
+  overflow:hidden;
+  mask-image:linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+}
+.review-track{
+  display:flex; gap:20px;
+  animation:scroll-reviews 50s linear infinite;
+}
+.review-track:hover{animation-play-state:paused;}
+.review-card{
+  flex:none;
+  width:320px;
+  background:var(--ink-2);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:24px;
+}
+.review-card .stars{color:var(--yellow); font-size:0.9rem; margin-bottom:14px; letter-spacing:1px;}
+.review-card p{
+  font-size:0.94rem;
+  color:rgba(247,245,239,0.85);
+  margin-bottom:16px;
+  line-height:1.55;
+}
+.review-card .who{
+  font-family:var(--mono);
+  font-size:0.76rem;
+  color:rgba(247,245,239,0.45);
+  display:flex; align-items:center; gap:8px;
+}
+.review-card .who .av{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--green); color:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700; font-size:0.7rem;
+}
+@keyframes scroll-reviews{
+  from{transform:translateX(0);}
+  to{transform:translateX(-50%);}
+}
+
+/* ---------- gallery ---------- */
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  grid-auto-rows:160px;
+  gap:14px;
+}
+.gallery-cell{
+  background:
+    linear-gradient(135deg, var(--ink-2), var(--ink));
+  border:1px solid var(--line);
+  border-radius:8px;
+  position:relative;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+}
+.gallery-cell::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image:repeating-linear-gradient(45deg, var(--line) 0 1px, transparent 1px 14px);
+  opacity:0.4;
+}
+.gallery-cell span{
+  position:relative; z-index:2;
+  font-family:var(--mono); font-size:0.68rem; letter-spacing:0.1em;
+  color:rgba(247,245,239,0.3); text-transform:uppercase;
+}
+.gallery-cell.tall{grid-row:span 2;}
+.gallery-cell.wide{grid-column:span 2;}
+
+.gallery-soon{
+  margin-top:28px;
+  display:flex; align-items:center; gap:14px;
+  font-family:var(--mono);
+  color:rgba(247,245,239,0.6);
+  font-size:0.88rem;
+  justify-content:center;
+  text-align:center;
+}
+.gallery-soon .blink{
+  width:8px; height:8px; border-radius:50%; background:var(--yellow);
+  animation:pulse2 1.6s infinite;
+}
+@keyframes pulse2{
+  0%,100%{opacity:1;} 50%{opacity:0.25;}
+}
+
+/* ---------- contact ---------- */
+.contact-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+}
+.contact-card{
+  background:var(--ink-2);
+  border:1px solid var(--line-strong);
+  border-radius:8px;
+  padding:36px;
+}
+.contact-row{
+  display:flex; gap:16px;
+  padding:18px 0;
+  border-bottom:1px solid var(--line);
+}
+.contact-row:last-child{border-bottom:none;}
+.contact-row .ic{
+  flex:none; width:40px;height:40px;
+  border-radius:6px; background:rgba(111,190,68,0.1);
+  border:1px solid rgba(111,190,68,0.3);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--green);
+}
+.contact-row .lbl{
+  font-family:var(--mono); font-size:0.68rem; letter-spacing:0.1em;
+  text-transform:uppercase; color:rgba(247,245,239,0.45); margin-bottom:4px;
+}
+.contact-row .val{font-size:1.02rem; font-weight:600;}
+.contact-row a.val:hover{color:var(--green);}
+
+.map-frame{
+  border-radius:8px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  height:100%;
+  min-height:340px;
+  position:relative;
+}
+.map-frame iframe{width:100%; height:100%; min-height:340px; border:0; filter:grayscale(0.3) contrast(1.05);}
+
+.perks-row{
+  display:flex; flex-wrap:wrap; gap:10px;
+  margin-top:28px;
+}
+.perk-chip{
+  font-family:var(--mono); font-size:0.78rem;
+  border:1px solid var(--line-strong);
+  border-radius:20px;
+  padding:8px 14px;
+  display:inline-flex; align-items:center; gap:8px;
+  color:rgba(247,245,239,0.8);
+}
+.perk-chip .ic-sm{color:var(--green);}
+
+/* ---------- footer cta ---------- */
+.footer-cta{
+  padding:90px 0;
+  text-align:center;
+  background:
+    radial-gradient(ellipse 700px 400px at 50% 0%, rgba(111,190,68,0.14), transparent 70%),
+    var(--ink);
+}
+.footer-cta h2{
+  font-family:var(--display);
+  font-size:clamp(2.2rem, 5vw, 3.6rem);
+  margin-bottom:18px;
+}
+.footer-cta p{
+  color:rgba(247,245,239,0.7);
+  max-width:480px;
+  margin:0 auto 32px;
+}
+.footer-cta .btn-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+
+footer{
+  padding:36px 0;
+  border-top:1px solid var(--line);
+}
+.footer-inner{
+  display:flex; justify-content:space-between; align-items:center;
+  flex-wrap:wrap; gap:16px;
+  font-size:0.82rem;
+  color:rgba(247,245,239,0.45);
+}
+.footer-inner .fbrand{
+  font-family:var(--mono); font-weight:700; color:rgba(247,245,239,0.6);
+}
+.footer-links{display:flex; gap:20px;}
+.footer-links a:hover{color:var(--green);}
+
+/* ---------- scroll reveal ---------- */
+.reveal{
+  opacity:0; transform:translateY(24px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.reveal.in{opacity:1; transform:translateY(0);}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  nav.primary-nav{display:none;}
+  .menu-toggle{display:block;}
+  .topbar-cta .btn-ghost{display:none;}
+  .hero-grid{grid-template-columns:1fr; gap:50px;}
+  .about-grid{grid-template-columns:1fr; gap:40px;}
+  .price-grid{grid-template-columns:1fr; }
+  .contact-grid{grid-template-columns:1fr;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr); grid-auto-rows:140px;}
+  .gallery-cell.wide{grid-column:span 2;}
+}
+@media (max-width:980px){
+  nav.primary-nav.mobile-open{
+    display:flex;
+    position:absolute; top:100%; left:0; right:0;
+    background:var(--ink); flex-direction:column;
+    padding:20px 28px 28px;
+    border-bottom:1px solid var(--line);
+    gap:6px;
+  }
+  nav.primary-nav.mobile-open a{padding:12px 0; border-bottom:1px solid var(--line); width:100%;}
+}
+@media (max-width:600px){
+  .wrap{padding:0 20px;}
+  .hero{padding:90px 0 60px;}
+  .hero-meta{gap:24px;}
+  .section{padding:64px 0;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr); grid-auto-rows:120px;}
+}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#top" class="brand">
+      <span class="mark">HF</span>
+      <span>HELLAFIT<small>FEHÉRVÁR</small></span>
+    </a>
+    <nav class="primary-nav" id="primaryNav">
+      <a href="#rolunk">Rólunk</a>
+      <a href="#arak">Áraink</a>
+      <a href="#velemenyek">Vélemények</a>
+      <a href="#galeria">Galéria</a>
+      <a href="#nyitvatartas">Nyitvatartás</a>
+      <a href="#kapcsolat">Kapcsolat</a>
+    </nav>
+    <div class="topbar-cta">
+      <a href="https://www.facebook.com/" class="btn btn-ghost" id="fbTop">Messenger</a>
+      <a href="#arak" class="btn btn-primary">Áraink</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menü megnyitása" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span> Bőrgyár utca 8, Székesfehérvár</span>
+      <h1 class="hero-title">Nem a külső<br>számít. <em>A munka.</em></h1>
+      <p class="hero-lead">Családias edzőterem a belváros szomszédságában — jól felszerelt géppark, ingyenes parkoló, és emberek, akik tényleg idejárnak edzeni, nem mutogatni.</p>
+      <div class="hero-actions">
+        <a href="#arak" class="btn btn-primary btn-lg">Bérletek és árak</a>
+        <a href="#kapcsolat" class="btn btn-ghost btn-lg">Első edzés ingyen</a>
+      </div>
+      <div class="hero-meta">
+        <div><span class="num">4.8★</span><span class="lbl">Google értékelés</span></div>
+        <div><span class="num">6/7</span><span class="lbl">nap nyitva</span></div>
+        <div><span class="num">0 Ft</span><span class="lbl">parkolás</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal">
+      <div class="status-card">
+        <div class="status-top">
+          <span class="ticket-id">TEREM / NYITVA-TARTÁS</span>
+          <span class="status-pill closed" id="statusPill"><span class="dot2"></span><span id="statusText">Zárva</span></span>
+        </div>
+        <ul class="hours-list" id="hoursList">
+          <li data-day="1"><span class="day">Hétfő</span><span>7:00 – 21:00</span></li>
+          <li data-day="2"><span class="day">Kedd</span><span>7:00 – 21:00</span></li>
+          <li data-day="3"><span class="day">Szerda</span><span>7:00 – 21:00</span></li>
+          <li data-day="4"><span class="day">Csütörtök</span><span>7:00 – 21:00</span></li>
+          <li data-day="5"><span class="day">Péntek</span><span>7:00 – 21:00</span></li>
+          <li data-day="6"><span class="day">Szombat</span><span>9:00 – 18:00</span></li>
+          <li data-day="0"><span class="day">Vasárnap</span><span class="closed-txt">Zárva</span></li>
+        </ul>
+        <div class="address-strip">📍 Bőrgyár utca 8, Székesfehérvár, 8000</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TICKER ============ -->
+<div class="tickertape" aria-hidden="true">
+  <div class="tickertape-inner">
+    <span>🅿️ INGYENES BELSŐ UDVARI PARKOLÓ</span>
+    <span>🚍 5–10 PERC A BUSZÁLLOMÁSTÓL</span>
+    <span>🏢 5–10 PERC A PLÁZÁTÓL</span>
+    <span>⛽ BENZINKÚT SZOMSZÉDSÁGÁBAN</span>
+    <span>🛒 SZUPERMARKET A KÖZELBEN</span>
+    <span>💪 ELSŐ EDZÉS INGYENES</span>
+    <span>🅿️ INGYENES BELSŐ UDVARI PARKOLÓ</span>
+    <span>🚍 5–10 PERC A BUSZÁLLOMÁSTÓL</span>
+    <span>🏢 5–10 PERC A PLÁZÁTÓL</span>
+    <span>⛽ BENZINKÚT SZOMSZÉDSÁGÁBAN</span>
+    <span>🛒 SZUPERMARKET A KÖZELBEN</span>
+    <span>💪 ELSŐ EDZÉS INGYENES</span>
+  </div>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<section class="section" id="rolunk">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Rólunk</span>
+      <h2 class="section-title">Egy terem, ahol<br>mindenki ismeri a neved.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-copy reveal">
+        <p>A HellaFit Fehérvár nem egy lánc, és nem is akar az lenni. Egy kis, családi hangulatú edzőterem vagyunk a Bőrgyár utcában — tiszta, jól felszerelt, és olyan emberekkel, akik valódi célokért edzenek, nem a tükör kedvéért.</p>
+        <p class="pull-quote">„Nem a »majmok« és az »arcok«, hanem emberek járnak ide edzeni.”</p>
+        <p>A géppark <strong>kondiózásra, tömegnövelésre és erőemelésre</strong> egyaránt alkalmas, így akár csak formában akarsz maradni, akár komolyan nekifutnál az erőedzésnek, megtalálod a hozzá való eszközt. Több <strong>személyi edző</strong> dolgozik nálunk, és rendszeres <strong>csoportos órákat</strong> is tartunk.</p>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature-row reveal">
+          <div class="ic">🏋️</div>
+          <div><h3>Komplett géppark</h3><p>Kardió, kondi és szabadsúlyos zóna — erőemelésre és tömegnövelésre is felkészülve.</p></div>
+        </div>
+        <div class="feature-row reveal">
+          <div class="ic">🧑‍🏫</div>
+          <div><h3>Személyi edzők helyben</h3><p>Több edző is elérhető egyéni programhoz, csoportos óráinkon felül.</p></div>
+        </div>
+        <div class="feature-row reveal">
+          <div class="ic">🧼</div>
+          <div><h3>Tiszta, rendezett tér</h3><p>Gondozott öltözők, klimatizált terem — télen meleg, nyáron hűvös.</p></div>
+        </div>
+        <div class="feature-row reveal">
+          <div class="ic">🤝</div>
+          <div><h3>Kezdőbarát légkör</h3><p>Senki nem méricskél. Az első edzésed nálunk ingyenes.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="section pricing-section" id="arak">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Bérleti díjak</span>
+      <h2 class="section-title">Egyszerű árak,<br>rejtett költségek nélkül.</h2>
+      <p class="section-sub">Válassz napijegyet egy próbára, vagy bérletet, ha betársulsz közénk hosszabb távra. Az első edzésed mindig ingyenes.</p>
+    </div>
+
+    <div class="price-grid">
+
+      <div class="price-card reveal">
+        <div class="pc-top"><span class="pc-num">№ 01</span><span class="pc-badge">PRÓBA</span></div>
+        <h3>Napijegy</h3>
+        <p class="pc-desc">Egyszeri belépés, ha csak benéznél vagy úton vagy.</p>
+        <div class="pc-price"><span class="amount">2 500</span><span class="cur">Ft / nap</span></div>
+      </div>
+
+      <div class="price-card featured reveal">
+        <div class="pc-top"><span class="pc-num">№ 02</span><span class="pc-badge">LEGNÉPSZERŰBB</span></div>
+        <h3>Havi bérlet</h3>
+        <p class="pc-desc">Korlátlan belépés egy teljes hónapra, bármikor.</p>
+        <div class="pc-price"><span class="amount">17 000</span><span class="cur">Ft / hó</span></div>
+      </div>
+
+      <div class="price-card reveal">
+        <div class="pc-top"><span class="pc-num">№ 03</span><span class="pc-badge yellow">DIÁK</span></div>
+        <h3>Diák bérlet</h3>
+        <p class="pc-desc">Korlátlan belépés kedvezményesen, érvényes diákigazolvánnyal.</p>
+        <div class="pc-price"><span class="amount">14 000</span><span class="cur">Ft / hó</span></div>
+      </div>
+
+      <div class="price-card reveal">
+        <div class="pc-top"><span class="pc-num">№ 04</span><span class="pc-badge red">NŐI</span></div>
+        <h3>Női bérlet</h3>
+        <p class="pc-desc">Korlátlan havi belépés, kedvezményes áron.</p>
+        <div class="pc-price"><span class="amount">15 000</span><span class="cur">Ft / hó</span></div>
+      </div>
+
+      <div class="price-card reveal">
+        <div class="pc-top"><span class="pc-num">№ 05</span><span class="pc-badge yellow">DÉLELŐTT</span></div>
+        <h3>Kedvezményes bérlet</h3>
+        <p class="pc-desc">Délelőttös belépés 14:00 óráig, illetve nyugdíjasoknak.</p>
+        <div class="pc-price"><span class="amount">14 000</span><span class="cur">Ft / hó</span></div>
+      </div>
+
+      <div class="price-card reveal">
+        <div class="pc-top"><span class="pc-num">№ 06</span><span class="pc-badge">RUGALMAS</span></div>
+        <h3>10+1 alkalmas bérlet</h3>
+        <p class="pc-desc">11 belépés, 2 hónapig érvényes — ha nem jössz minden héten.</p>
+        <div class="pc-price"><span class="amount">25 000</span><span class="cur">Ft / bérlet</span></div>
+      </div>
+
+    </div>
+
+    <div class="price-note">— Minden bérlet a recepción váltható ki, készpénzzel vagy kártyával.</div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section class="section" id="velemenyek">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Vélemények</span>
+      <h2 class="section-title">Amit a tagjaink mondanak.</h2>
+    </div>
+    <div class="reviews-rating reveal">
+      <span class="rating-score">4.8</span>
+      <div>
+        <div class="rating-stars">★★★★★</div>
+        <div class="rating-sub">Visszajelzések alapján, Facebook és Google</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="review-marquee reveal">
+    <div class="review-track" id="reviewTrack">
+      <!-- cards injected by JS for seamless loop, fallback below -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="section" id="galeria">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Galéria</span>
+      <h2 class="section-title">Hamarosan friss fotók.</h2>
+      <p class="section-sub">Most éppen a termet fényképezzük — nézz vissza nemsokára, vagy ugorj be személyesen, és nézd meg élőben.</p>
+    </div>
+
+    <div class="gallery-grid" aria-hidden="true">
+      <div class="gallery-cell wide"><span>FOTÓ HAMAROSAN</span></div>
+      <div class="gallery-cell"><span>FOTÓ HAMAROSAN</span></div>
+      <div class="gallery-cell tall"><span>FOTÓ HAMAROSAN</span></div>
+      <div class="gallery-cell"><span>FOTÓ HAMAROSAN</span></div>
+      <div class="gallery-cell"><span>FOTÓ HAMAROSAN</span></div>
+      <div class="gallery-cell wide"><span>FOTÓ HAMAROSAN</span></div>
+    </div>
+
+    <div class="gallery-soon">
+      <span class="blink"></span> Aktuális fotók feltöltés alatt — addig is várunk Facebook oldalunkon!
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT + HOURS ============ -->
+<section class="section" id="kapcsolat">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Kapcsolat &amp; nyitvatartás</span>
+      <h2 class="section-title">Gyere be, vagy írj nekünk.</h2>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card reveal" id="nyitvatartas">
+        <div class="contact-row">
+          <div class="ic">📍</div>
+          <div><div class="lbl">Cím</div><a class="val" href="https://maps.google.com/?q=Bőrgyár+utca+8,+Székesfehérvár" target="_blank" rel="noopener">Bőrgyár utca 8, Székesfehérvár, 8000</a></div>
+        </div>
+        <div class="contact-row">
+          <div class="ic">📞</div>
+          <div><div class="lbl">Telefon</div><a class="val" href="tel:+36302202699">+36 30 220 2699</a></div>
+        </div>
+        <div class="contact-row">
+          <div class="ic">✉️</div>
+          <div><div class="lbl">E-mail</div><a class="val" href="mailto:hellafitt@gmail.com">hellafitt@gmail.com</a></div>
+        </div>
+        <div class="contact-row">
+          <div class="ic">💬</div>
+          <div><div class="lbl">Messenger</div><a class="val" href="https://www.facebook.com/" target="_blank" rel="noopener">HellaFit Fehérvár — Facebook</a></div>
+        </div>
+        <div class="contact-row">
+          <div class="ic">🕒</div>
+          <div style="width:100%">
+            <div class="lbl" style="margin-bottom:10px;">Nyitvatartás</div>
+            <ul class="hours-list" style="font-size:0.84rem;">
+              <li data-day="1"><span class="day">Hétfő</span><span>7:00 – 21:00</span></li>
+              <li data-day="2"><span class="day">Kedd</span><span>7:00 – 21:00</span></li>
+              <li data-day="3"><span class="day">Szerda</span><span>7:00 – 21:00</span></li>
+              <li data-day="4"><span class="day">Csütörtök</span><span>7:00 – 21:00</span></li>
+              <li data-day="5"><span class="day">Péntek</span><span>7:00 – 21:00</span></li>
+              <li data-day="6"><span class="day">Szombat</span><span>9:00 – 18:00</span></li>
+              <li data-day="0"><span class="day">Vasárnap</span><span class="closed-txt">Zárva</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="perks-row">
+          <span class="perk-chip"><span class="ic-sm">🅿️</span> Ingyenes parkoló</span>
+          <span class="perk-chip"><span class="ic-sm">🚍</span> 5–10 perc a buszállomástól</span>
+          <span class="perk-chip"><span class="ic-sm">🏢</span> 5–10 perc a plázától</span>
+          <span class="perk-chip"><span class="ic-sm">⛽</span> Benzinkút mellett</span>
+          <span class="perk-chip"><span class="ic-sm">🛒</span> Szupermarket a közelben</span>
+        </div>
+      </div>
+
+      <div class="map-frame reveal">
+        <iframe
+          src="https://www.google.com/maps?q=B%C5%91rgy%C3%A1r%20utca%208%2C%20Sz%C3%A9kesfeh%C3%A9rv%C3%A1r%2C%208000&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="HellaFit Fehérvár térkép"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER CTA ============ -->
+<section class="footer-cta">
+  <div class="wrap">
+    <h2>Az első edzés ingyenes.<br>Ennyi a kockázat.</h2>
+    <p>Nézz be hozzánk, próbáld ki a termet, és döntsd el, hogy nálunk akarsz-e edzeni. Mi tudjuk, hogy igen.</p>
+    <div class="btn-row">
+      <a href="https://www.facebook.com/" class="btn btn-primary btn-lg">Írj Messengeren</a>
+      <a href="tel:+36302202699" class="btn btn-ghost btn-lg">Hívj most</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span class="fbrand">HELLAFIT FEHÉRVÁR</span>
+    <span>Bőrgyár utca 8, Székesfehérvár, 8000</span>
+    <div class="footer-links">
+      <a href="#arak">Áraink</a>
+      <a href="#kapcsolat">Kapcsolat</a>
+      <a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ---- mobile menu ----
+const menuToggle = document.getElementById('menuToggle');
+const primaryNav = document.getElementById('primaryNav');
+menuToggle.addEventListener('click', () => {
+  const open = primaryNav.classList.toggle('mobile-open');
+  menuToggle.classList.toggle('open', open);
+  menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+primaryNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  primaryNav.classList.remove('mobile-open');
+  menuToggle.classList.remove('open');
+}));
+
+// ---- opening hours logic ----
+const HOURS = {
+  0: null, // Sunday closed
+  1: [7,21], 2:[7,21], 3:[7,21], 4:[7,21], 5:[7,21],
+  6: [9,18]
+};
+function updateStatus(){
+  const now = new Date();
+  const day = now.getDay();
+  const hour = now.getHours() + now.getMinutes()/60;
+  const range = HOURS[day];
+  const isOpen = range && hour >= range[0] && hour < range[1];
+
+  const pill = document.getElementById('statusPill');
+  const text = document.getElementById('statusText');
+  if(isOpen){
+    pill.classList.remove('closed'); pill.classList.add('open');
+    text.textContent = 'Most nyitva';
+  } else {
+    pill.classList.remove('open'); pill.classList.add('closed');
+    text.textContent = 'Jelenleg zárva';
+  }
+
+  document.querySelectorAll('.hours-list').forEach(list => {
+    list.querySelectorAll('li').forEach(li => {
+      const d = parseInt(li.getAttribute('data-day'));
+      li.classList.toggle('today', d === day);
+    });
+  });
+}
+updateStatus();
+setInterval(updateStatus, 60000);
+
+// ---- reveal on scroll ----
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+revealEls.forEach(el => io.observe(el));
+
+// ---- reviews marquee (built from real feedback, duplicated for seamless loop) ----
+const reviews = [
+  {t:"Több éven át edzettem itt, szuper hely, ismerem a tulajt is. Nem a „majmok” és az „arcok”, hanem emberek járnak ide edzeni — a gépek pedig szuper állapotban vannak.", n:"Régi tag"},
+  {t:"Nagyon szeretek ide járni. Jól felszerelt, nagyon tiszta és családias hangulatú. Több személyi edző is dolgozik itt, és csoportos edzések is elérhetők.", n:"Visszatérő vendég"},
+  {t:"Az első alkalom ingyenes, nagy tér áll rendelkezésre a felső szinten. Tiszta, rendezett, a női öltöző is rendben van tartva.", n:"Új tag"},
+  {t:"Szép, tiszta hely, barátságos emberek, közvetlen stílus. Semmi flancolás — kezdőként is kiválóan éreztem magam, nem néztek ki senkit.", n:"Kezdő tag"},
+  {t:"Kellemes környezet, kiváló edzők, minőségi edzőgépek, változatos edzésprogramok, korrekt és kifogástalan kiszolgálás — közel egy év tapasztalata alapján.", n:"Éves bérletes"},
+  {t:"Nagyon kedves a tulaj, családi a hangulat, profik a gépek. Nem is kell több egy jó teremhez.", n:"Tag"},
+  {t:"Évek óta ide járok, szuper hely, mindenkinek csak ajánlani tudom.", n:"Hosszú távú tag"},
+  {t:"Nyáron hűvös, télen meleg, jól felszerelt, jó a társaság.", n:"Rendszeres látogató"},
+  {t:"Családias hangulatú terem, nincsenek sokan, jó fejek a srácok.", n:"Tag"},
+  {t:"Korrektül felszerelt, klimatizált, minden igényt kielégítő edzőterem.", n:"Tag"}
+];
+function starString(){ return "★★★★★"; }
+function buildReviewCard(r){
+  const div = document.createElement('div');
+  div.className = 'review-card';
+  div.innerHTML = `<div class="stars">${starString()}</div><p>${r.t}</p><div class="who"><span class="av">${r.n.charAt(0)}</span>${r.n}</div>`;
+  return div;
+}
+const track = document.getElementById('reviewTrack');
+[...reviews, ...reviews].forEach(r => track.appendChild(buildReviewCard(r)));
+</script>
+
+</body>
+</html>
